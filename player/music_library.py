@@ -1,3 +1,15 @@
+from dataclasses import dataclass
+
+@dataclass
+class Track:
+    title: str
+    artist: str
+    file: str
+
+    def __str__(self):
+        return f"{self.title} by {self.artist}"
+
+
 class MusicLibrary:
     def __init__(self):
         self._tracks = []
