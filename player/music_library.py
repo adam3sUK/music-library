@@ -19,16 +19,16 @@ class MusicLibrary:
         self._tracks.append(track)
 
     def remove(self, tracknum):
-        if self.__track_not_exist(tracknum):
-            return False
-        else:
+        if self.__track_exist(tracknum):
             self._tracks.pop(tracknum)
             return True
+        return False
+
 
     def all(self):
         return self._tracks
 
-    def __track_not_exist(self, tracknum):
-        return tracknum >= len(self._tracks)
+    def __track_exist(self, tracknum):
+        return tracknum < len(self._tracks)
 
 
