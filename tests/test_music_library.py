@@ -18,7 +18,9 @@ class TestMusicLibrary(unittest.TestCase):
         self.music_library.add(self.track_one)
         self.music_library.add(self.track_two)
         self.music_library.add(self.track_three)
-        self.assertEqual(self.music_library.all(), [self.track_one, self.track_two, self.track_three])
+        self.assertEqual(
+            self.music_library.all(), [self.track_one, self.track_two, self.track_three]
+        )
 
     def test_returns_true_on_track_removal(self):
         self.music_library.add(self.track_one)

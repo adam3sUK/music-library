@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 
+
 @dataclass
 class Track:
     title: str
@@ -18,7 +19,7 @@ class MusicLibrary:
         self._tracks.append(track)
 
     def remove(self, tracknum):
-        if tracknum > len(self._tracks) - 1:
+        if self.__track_not_exist(tracknum):
             return False
         else:
             self._tracks.pop(tracknum)
@@ -26,3 +27,8 @@ class MusicLibrary:
 
     def all(self):
         return self._tracks
+
+    def __track_not_exist(self, tracknum):
+        return tracknum >= len(self._tracks)
+
+
