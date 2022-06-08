@@ -1,7 +1,6 @@
 import unittest
-
 from player.music_library import MusicLibrary, Track
-
+from player.search import Searchers
 
 class TestMusicLibrary(unittest.TestCase):
     def setUp(self):
@@ -44,9 +43,17 @@ class TestMusicLibrary(unittest.TestCase):
         self.music_library.add(self.track_one)
         self.music_library.add(self.track_two)
         result = self.music_library.search(
+            lambda track: "go" in track.title.lower()
+        )
+        self.assertEqual(result, [self.track_two])
+
+    def test_can_search_different_title(self):
+        self.music_library.add(self.track_one)
+        self.music_library.add(self.track_two)
+        result = self.music_library.search(
             lambda track: "as" in track.title.lower()
         )
-        self.assertEqual(list(result), [self.track_one])
+        self.assertEqual(result, [self.track_one])
 
     def test_can_get_multiple_search_results(self):
         self.music_library.add(self.track_one)
@@ -58,7 +65,7 @@ class TestMusicLibrary(unittest.TestCase):
         result = self.music_library.search(
             lambda track: "love" in track.title.lower()
         )
-        self.assertEqual(list(result), [love_track_one, love_track_two])
+        self.assertEqual(result, [love_track_one, love_track_two])
 
     def test_can_search_by_artist(self):
         self.music_library.add(self.track_one)
@@ -66,7 +73,7 @@ class TestMusicLibrary(unittest.TestCase):
         result = self.music_library.search(
             lambda track: "harry" in track.artist.lower()
         )
-        self.assertEqual(list(result), [self.track_one])
+        self.assertEqual(result, [self.track_one])
 
     def test_can_search_by_file(self):
         self.music_library.add(self.track_one)
@@ -74,7 +81,7 @@ class TestMusicLibrary(unittest.TestCase):
         result = self.music_library.search(
             lambda track: "as-it" in track.file.lower()
         )
-        self.assertEqual(list(result), [self.track_one])
+        self.assertEqual(result, [self.track_one])
 
     def test_can_search_by_anything(self):
         self.music_library.add(self.track_one)
@@ -85,4 +92,4 @@ class TestMusicLibrary(unittest.TestCase):
             or ("as-it" in track.artist.lower())
             or ("as-it" in track.file.lower())
         )
-        self.assertEqual(list(result), [self.track_one])
+        self.assertEqual(result, [self.track_one])

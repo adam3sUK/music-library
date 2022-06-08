@@ -4,7 +4,7 @@
 
 from player.music_library import MusicLibrary, Track
 from player.music_player import MusicPlayer
-
+from player.search import Searchers
 
 class Interface:
     def __init__(self, console, subprocess):
@@ -63,21 +63,16 @@ class Interface:
         choice = self.console.input("What do you want to search by? ")
         search = self.console.input("What do you want to search for? ").lower()
         if choice == "t":
-            found = list(self.music_library.search(lambda track: search in track.title.lower()))
+            found = self.music_library.search(Searchers.by_title_case_insensitive(search))
             self._list_tracks(found)
         elif choice == "a":
-            found = list(self.music_library.search(lambda track: search in track.artist.lower()))
+            found = self.music_library.search(Searchers.by_artist_case_insensitive(search))
             self._list_tracks(found)
         elif choice == "f":
-            found = list(self.music_library.search(lambda track: search in track.file.lower()))
+            found = self.music_library.search(Searchers.by_file_case_insensitive(search))
             self._list_tracks(found)
         elif choice == "*":
-            found = list(self.music_library.search(
-            lambda track: 
-            (search in track.title.lower())
-            or (search in track.artist.lower())
-            or (search in track.file.lower())
-        ))
+            found = self.music_library.search(Searchers.by_anything_case_insensitive(search))
             self._list_tracks(found)
         else:
             self.console.print("No such field!")
