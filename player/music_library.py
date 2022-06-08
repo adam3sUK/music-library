@@ -24,6 +24,8 @@ class MusicLibrary:
             return True
         return False
 
+    def search(self, condition):
+        return [track for track in self._tracks if condition(track)]
 
     def all(self):
         return self._tracks

@@ -51,7 +51,7 @@ class Interface:
     def _list_tracks(self, tracks):
         for idx, track in enumerate(tracks):
             self.console.print(
-                f"{idx + 1}. {track.title} by {track.artist} @ {track.file}"
+                f"{idx + 1}. {track} @ {track.file}"
             )
 
     def _search_tracks(self):
@@ -63,16 +63,21 @@ class Interface:
         choice = self.console.input("What do you want to search by? ")
         search = self.console.input("What do you want to search for? ").lower()
         if choice == "t":
-            found = []  # TODO: Find tracks by title
+            found = list(self.music_library.search(lambda track: search in track.title.lower()))
             self._list_tracks(found)
         elif choice == "a":
-            found = []  # TODO: Find tracks by artist
+            found = list(self.music_library.search(lambda track: search in track.artist.lower()))
             self._list_tracks(found)
         elif choice == "f":
-            found = []  # TODO: Find tracks by file
+            found = list(self.music_library.search(lambda track: search in track.file.lower()))
             self._list_tracks(found)
         elif choice == "*":
-            found = []  # TODO: Find tracks by any field
+            found = list(self.music_library.search(
+            lambda track: 
+            (search in track.title.lower())
+            or (search in track.artist.lower())
+            or (search in track.file.lower())
+        ))
             self._list_tracks(found)
         else:
             self.console.print("No such field!")
@@ -83,7 +88,7 @@ class Interface:
         tracks = self.music_library.all()
         if track_id >= 0 and track_id < len(tracks):
             track = tracks[track_id]
-            self.console.print(f"Playing {track.title} by {track.artist}...")
+            self.console.print(f"Playing {track}...")
             self.music_player.play(track.file)
             self.console.print("Done.")
         else:
