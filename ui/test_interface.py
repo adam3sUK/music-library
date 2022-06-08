@@ -25,6 +25,8 @@ class TestConsoleRunner(unittest.TestCase):
         PrintLine("  *: anything"),
     ]
 
+    PLAY = [SEARCH].pop(0)
+
     QUIT = [*OPTIONS, InputLine("What do you pick? ", "q")]
 
     def test_adds_tracks(self):
@@ -53,8 +55,22 @@ class TestConsoleRunner(unittest.TestCase):
             InputLine("What's the file? ", "data/tunes/myfav.wav"),
             PrintLine("Added successfully."),
             *self.OPTIONS,
+            InputLine("What do you pick? ", "a"),
+            InputLine("What's the title? ", "The Milky Way over Ratlinghope"),
+            InputLine("What's the artist? ", "Bibio"),
+            InputLine("What's the file? ", "data/tunes/myfav2.wav"),
+            PrintLine("Added successfully."),
+            *self.OPTIONS,
             InputLine("What do you pick? ", "p"),
+            PrintLine("Search by:"),
+            PrintLine("  t: title"),
+            PrintLine("  a: artist"),
+            PrintLine("  f: file"),
+            PrintLine("  *: anything"),
+            InputLine("What do you want to search by? ", "f"),
+            InputLine("What do you want to search for? ", "data"),
             PrintLine("1. Major's Titling Victory by The Cribs @ data/tunes/myfav.wav"),
+            PrintLine("2. The Milky Way over Ratlinghope by Bibio @ data/tunes/myfav2.wav"),
             InputLine("Which do you want to play? ", "1"),
             PrintLine("Playing Major's Titling Victory by The Cribs..."),
             PrintLine("Done."),

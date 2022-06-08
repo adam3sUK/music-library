@@ -53,6 +53,7 @@ class Interface:
             self.console.print(
                 f"{idx + 1}. {track} @ {track.file}"
             )
+        return tracks
 
     def _search_tracks(self):
         self.console.print("Search by:")
@@ -64,23 +65,23 @@ class Interface:
         search = self.console.input("What do you want to search for? ").lower()
         if choice == "t":
             found = self.music_library.search(Searchers.by_title_case_insensitive(search))
-            self._list_tracks(found)
+            return self._list_tracks(found)
         elif choice == "a":
             found = self.music_library.search(Searchers.by_artist_case_insensitive(search))
-            self._list_tracks(found)
+            return self._list_tracks(found)
         elif choice == "f":
             found = self.music_library.search(Searchers.by_file_case_insensitive(search))
-            self._list_tracks(found)
+            return self._list_tracks(found)
         elif choice == "*":
             found = self.music_library.search(Searchers.by_anything_case_insensitive(search))
-            self._list_tracks(found)
+            return self._list_tracks(found)
         else:
             self.console.print("No such field!")
 
     def _play_track(self):
-        self._list_tracks(self.music_library.all())
+        found_tracks = self._search_tracks()
         track_id = int(self.console.input("Which do you want to play? ")) - 1
-        tracks = self.music_library.all()
+        tracks = found_tracks
         if track_id >= 0 and track_id < len(tracks):
             track = tracks[track_id]
             self.console.print(f"Playing {track}...")
