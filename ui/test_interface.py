@@ -11,7 +11,7 @@ class TestConsoleRunner(unittest.TestCase):
         PrintLine("  d: to delete a track"),
         PrintLine("  l: to list your tracks"),
         PrintLine("  s: to search your tracks"),
-        PrintLine(" S: to summarise your top 15 artists"),
+        PrintLine("  S: to summarise your top 15 artists"),
         PrintLine("  q: to quit"),
     ]
 
@@ -91,6 +91,36 @@ class TestConsoleRunner(unittest.TestCase):
             ["afplay", "data/tunes/myfav2.wav"],
             "Subprocess wasn't called properly to play the file.",
         )
+        self.assertTrue(testing_console_io.is_done())
+
+    def test_artist_summary(self):
+        testing_console_io = TestingConsoleIO(
+            *self.INTRO,
+            InputLine("What do you pick? ", "a"),
+            InputLine("What's the title? ", "Major's Titling Victory"),
+            InputLine("What's the artist? ", "The Cribs"),
+            InputLine("What's the file? ", "file1.mp3"),
+            PrintLine("Added successfully."),
+            *self.OPTIONS,
+            InputLine("What do you pick? ", "a"),
+            InputLine("What's the title? ", "The Milky Way over Ratlinghope"),
+            InputLine("What's the artist? ", "Bibio"),
+            InputLine("What's the file? ", "file2.mp3"),
+            PrintLine("Added successfully."),
+            *self.OPTIONS,
+            InputLine("What do you pick? ", "a"),
+            InputLine("What's the title? ", "Men's Needs"),
+            InputLine("What's the artist? ", "The Cribs"),
+            InputLine("What's the file? ", "file3.mp3"),
+            PrintLine("Added successfully."),
+            *self.OPTIONS,
+            InputLine("What do you pick? ", "S"),
+            PrintLine("1. The Cribs: 2 tracks"),
+            PrintLine("2. Bibio: 1 tracks"),
+            *self.QUIT,
+        )
+        interface = Interface(testing_console_io, MockSubprocess())
+        interface.run()
         self.assertTrue(testing_console_io.is_done())
 
     def test_searches_tracks(self):
