@@ -11,6 +11,7 @@ class TestConsoleRunner(unittest.TestCase):
         PrintLine("  d: to delete a track"),
         PrintLine("  l: to list your tracks"),
         PrintLine("  s: to search your tracks"),
+        PrintLine(" S: to summarise your top 15 artists"),
         PrintLine("  q: to quit"),
     ]
 
@@ -56,6 +57,12 @@ class TestConsoleRunner(unittest.TestCase):
             PrintLine("Added successfully."),
             *self.OPTIONS,
             InputLine("What do you pick? ", "a"),
+            InputLine("What's the title? ", "Hello"),
+            InputLine("What's the artist? ", "Adele"),
+            InputLine("What's the file? ", "yokal.wav"),
+            PrintLine("Added successfully."),
+            *self.OPTIONS,
+            InputLine("What do you pick? ", "a"),
             InputLine("What's the title? ", "The Milky Way over Ratlinghope"),
             InputLine("What's the artist? ", "Bibio"),
             InputLine("What's the file? ", "data/tunes/myfav2.wav"),
@@ -71,8 +78,8 @@ class TestConsoleRunner(unittest.TestCase):
             InputLine("What do you want to search for? ", "data"),
             PrintLine("1. Major's Titling Victory by The Cribs @ data/tunes/myfav.wav"),
             PrintLine("2. The Milky Way over Ratlinghope by Bibio @ data/tunes/myfav2.wav"),
-            InputLine("Which do you want to play? ", "1"),
-            PrintLine("Playing Major's Titling Victory by The Cribs..."),
+            InputLine("Which do you want to play? ", "2"),
+            PrintLine("Playing The Milky Way over Ratlinghope by Bibio..."),
             PrintLine("Done."),
             *self.QUIT,
         )
@@ -81,7 +88,7 @@ class TestConsoleRunner(unittest.TestCase):
         interface.run()
         self.assertEqual(
             mock_subprocess.args,
-            ["afplay", "data/tunes/myfav.wav"],
+            ["afplay", "data/tunes/myfav2.wav"],
             "Subprocess wasn't called properly to play the file.",
         )
         self.assertTrue(testing_console_io.is_done())

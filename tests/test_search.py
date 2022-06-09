@@ -1,5 +1,5 @@
 import unittest
-from player.search import Search
+from player.search import Searchers
 
 class TestSearch(unittest.TestCase):
 

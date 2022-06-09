@@ -1,9 +1,6 @@
-# Over to you!
-# I'm outta here!
-# ~Kez xoxo
-
 from player.music_library import MusicLibrary, Track
 from player.music_player import MusicPlayer
+from player.artist_tracks import ArtistTracks
 from player.search import Searchers
 
 class Interface:
@@ -26,6 +23,8 @@ class Interface:
                 self._list_tracks(self.music_library.all())
             elif choice == "s":
                 self._search_tracks()
+            elif choice == "S":
+                self._list_artist_tracks(self.music_library.all())                
             elif choice == "q":
                 return
             else:
@@ -38,6 +37,7 @@ class Interface:
         self.console.print("  d: to delete a track")
         self.console.print("  l: to list your tracks")
         self.console.print("  s: to search your tracks")
+        self.console.print("  S: to summarise your top 15 artists")
         self.console.print("  q: to quit")
         return self.console.input("What do you pick? ")
 
@@ -54,6 +54,15 @@ class Interface:
                 f"{idx + 1}. {track} @ {track.file}"
             )
         return tracks
+
+    def _list_artist_tracks(self, tracks):
+        artist_tracks = ArtistTracks()
+        artist_tracks.add(tracks)
+        track_list = artist_tracks.all()
+        for idx, (artist, songs) in enumerate(track_list.items()):
+            self.console.print(
+                f"{idx + 1}. {artist}: {songs} tracks"
+            )
 
     def _search_tracks(self):
         self.console.print("Search by:")
