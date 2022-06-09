@@ -9,5 +9,9 @@ class ArtistTracks:
       else:
         self._artist_tracks[track.artist] = 1
 
-  def all(self):
-    return self._artist_tracks
+  def most_tracks(self):
+    all = self._sort_list()
+    return all[:15]
+
+  def _sort_list(self):
+    return sorted(self._artist_tracks.items(), key=lambda value: value[1], reverse=True)

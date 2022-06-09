@@ -58,8 +58,8 @@ class Interface:
     def _list_artist_tracks(self, tracks):
         artist_tracks = ArtistTracks()
         artist_tracks.add(tracks)
-        track_list = artist_tracks.all()
-        for idx, (artist, songs) in enumerate(track_list.items()):
+        track_list = artist_tracks.most_tracks()
+        for idx, (artist, songs) in enumerate(track_list):
             self.console.print(
                 f"{idx + 1}. {artist}: {songs} tracks"
             )
