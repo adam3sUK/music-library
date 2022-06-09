@@ -8,7 +8,22 @@ class TestArtistTracks(unittest.TestCase):
     self.track_one = Track("As It Was", "Harry Styles", "as-it-way.mp3")
     self.track_two = Track("Go", "Cat Burns", "go.mp3")
     self.track_three = Track("Sign of the Times", "Harry Styles", "sign-of-the-times.mp3")
-    self.track_four = Track("About damn time", "Lizzo", "about-damn-time.mp3")
+    self.track_list = [
+      Track("First class", "Jack Harlow", "life-times.mp3"),
+      Track("IFTK", "Tion Wayne", "iftk.mp3"),
+      Track("Running up that Hill", "Kate Bush", "ruth.mp3"),
+      Track("Afraid to feel", "LF SYSTEM", "afraid.mp3"),
+      Track("wait for u", "future", "wait.mp3"),
+      Track("crazy what love can do", "david guetta", "crazy.mp3"),
+      Track("green green grass", "george ezra", "grass.mp3"),
+      Track("spaceman", "sam ryder", "spaceman.mp3"),
+      Track("last last", "burna boy", "last.mp3"),
+      Track("where did you go?", "Jax jones", "where.mp3"),
+      Track("baby", "aitch", "baby.mp3"),
+      Track("all i wanna be", "tate mcrae", "all.mp3"),
+      Track("peru", "fireboy", "peru.mp3"),
+      Track("starlight", "dave", "starlight.mp3"),
+    ]
 
   def test_track_gets_added(self):
     self.artist_tracks.add([self.track_one])
@@ -35,21 +50,12 @@ class TestArtistTracks(unittest.TestCase):
 
   def test_no_more_than_15_artists_shown(self):
     self.artist_tracks.add([self.track_one, self.track_two, self.track_three])
-    self.artist_tracks.add([self.track_four])
-    self.artist_tracks.add([
-      Track("First class", "Jack Harlow", "life-times.mp3"),
-      Track("IFTK", "Tion Wayne", "iftk.mp3"),
-      Track("Running up that Hill", "Kate Bush", "ruth.mp3"),
-      Track("Afraid to feel", "LF SYSTEM", "afraid.mp3"),
-      Track("wait for u", "future", "wait.mp3"),
-      Track("crazy what love can do", "david guetta", "crazy.mp3"),
-      Track("green green grass", "george ezra", "grass.mp3"),
-      Track("spaceman", "sam ryder", "spaceman.mp3"),
-      Track("last last", "burna boy", "last.mp3"),
-      Track("where did you go?", "Jax jones", "where.mp3"),
-      Track("baby", "aitch", "baby.mp3"),
-      Track("all i wanna be", "tate mcrae", "all.mp3"),
-      Track("peru", "fireboy", "peru.mp3"),
-      Track("starlight", "dave", "starlight.mp3"),
-    ])
+    self.artist_tracks.add(self.track_list)
     self.assertEqual(len(self.artist_tracks.most_tracks()), 15)
+
+  def test_artist_with_most_tracks_is_first(self):
+    self.artist_tracks.add(self.track_list)
+    self.artist_tracks.add([self.track_one, self.track_three])
+    self.artist_tracks.add([self.track_two])
+    artist_most_tracks = self.artist_tracks.most_tracks()
+    self.assertEqual(artist_most_tracks[0][0], self.track_one.artist)
