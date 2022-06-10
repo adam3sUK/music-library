@@ -1,4 +1,4 @@
-from player.music_library import Track
+from music_library import Track
 import eyed3
 
 class TrackCreator:
@@ -8,7 +8,7 @@ class TrackCreator:
 
     def create(self):
         track = self._metafinder.load(self._file)
-        print(track)
+        print(track.tag)
         return Track(title=track.tag.title, artist=track.tag.artist, file=self._file)
 
 
