@@ -32,5 +32,3 @@ class MusicLibrary:
 
     def __track_exist(self, tracknum):
         return tracknum < len(self._tracks)
-
-

@@ -23,6 +23,7 @@ class TestArtistTracks(unittest.TestCase):
       Track("all i wanna be", "tate mcrae", "all.mp3"),
       Track("peru", "fireboy", "peru.mp3"),
       Track("starlight", "dave", "starlight.mp3"),
+      Track("starway", "led zeppelin", "stairway.mp3"),
     ]
 
   def test_track_gets_added(self):
@@ -55,7 +56,7 @@ class TestArtistTracks(unittest.TestCase):
 
   def test_artist_with_most_tracks_is_first(self):
     self.artist_tracks.add(self.track_list)
-    self.artist_tracks.add([self.track_one, self.track_three])
+    self.artist_tracks.add([self.track_one, self.track_three]) # by the same artist
     self.artist_tracks.add([self.track_two])
     artist_most_tracks = self.artist_tracks.most_tracks()
     self.assertEqual(artist_most_tracks[0][0], self.track_one.artist)
