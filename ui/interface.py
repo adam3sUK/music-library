@@ -1,7 +1,9 @@
 from player.music_library import MusicLibrary, Track
 from player.music_player import MusicPlayer
 from player.artist_tracks import ArtistTracks
+from player.track_creator import TrackCreator
 from player.search import Searchers
+import eyed3
 
 class Interface:
     def __init__(self, console, subprocess):
@@ -15,6 +17,8 @@ class Interface:
             choice = self._prompt()
             if choice == "a":
                 self._add_track()
+            if choice == "A":
+                self._add_track_file()
             elif choice == "p":
                 self._play_track()
             elif choice == "d":
@@ -32,7 +36,8 @@ class Interface:
 
     def _prompt(self):
         self.console.print("Enter:")
-        self.console.print("  a: to add a track")
+        self.console.print("  a: to add a track manually")
+        self.console.print("  A: to add a track automatically")
         self.console.print("  p: to play a track")
         self.console.print("  d: to delete a track")
         self.console.print("  l: to list your tracks")
@@ -40,6 +45,9 @@ class Interface:
         self.console.print("  S: to summarise your top 15 artists")
         self.console.print("  q: to quit")
         return self.console.input("What do you pick? ")
+
+    def _add_track_file(self):
+        pass
 
     def _add_track(self):
         title = self.console.input("What's the title? ")

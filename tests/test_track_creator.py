@@ -1,7 +1,6 @@
 import unittest
-from unittest.mock import Mock
-from player.music_library import Track
-from player.track_creator import TrackCreator
+from unittest.mock import MagicMock, Mock
+from player.track_creator import TrackCreator, Track
 
 class TestTrackCreator(unittest.TestCase):
 
@@ -12,10 +11,11 @@ class TestTrackCreator(unittest.TestCase):
     track_creator.create()
     eyed3.load.assert_called_with(path)
 
-  def test_creator_create_returns_track(self):
+  def test_creator_create_returns_track_instance(self):
     path = '/data/tunes/for-the-poor.mp3'
     eyed3 = Mock()
-    attrs = {'load.return_value': {'tag': {'artist': 'Bon Braso', 'title': 'For the Poor'}}}
+    tag = MagicMock(artist='Don Braso', title='For the Poor')
+    attrs = {'load.return_value': tag}
     eyed3.configure_mock(**attrs)
     track_creator = TrackCreator(path, eyed3)
     track = track_creator.create()

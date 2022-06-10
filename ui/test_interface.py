@@ -1,3 +1,4 @@
+from cgi import test
 import unittest
 from ui.interface import Interface
 from ui.mocks import PrintLine, InputLine, TestingConsoleIO, MockSubprocess
@@ -6,7 +7,8 @@ from ui.mocks import PrintLine, InputLine, TestingConsoleIO, MockSubprocess
 class TestConsoleRunner(unittest.TestCase):
     OPTIONS = [
         PrintLine("Enter:"),
-        PrintLine("  a: to add a track"),
+        PrintLine("  a: to add a track manually"),
+        PrintLine("  A: to add a track automatically"),
         PrintLine("  p: to play a track"),
         PrintLine("  d: to delete a track"),
         PrintLine("  l: to list your tracks"),
@@ -45,6 +47,21 @@ class TestConsoleRunner(unittest.TestCase):
         )
         interface = Interface(testing_console_io, MockSubprocess())
         interface.run()
+        self.assertTrue(testing_console_io.is_done())
+
+    def test_adds_tracks_from_file(self):
+        testing_console_io = TestingConsoleIO(
+            *self.INTRO,
+            InputLine("What do you pick? ", "A"),
+            InputLine("What's the file? ", "data/tunes/for-the-poor.mp3"),
+            PrintLine("For the Poor by Dan Brasco added!")
+            *self.OPTIONS,
+            InputLine("What do you pick? ", "l"),
+            PrintLine("1. For the Poor by Dan Brasco @ data/tunes/for-the-poor.mp3"),
+            *self.QUIT,
+        )
+        Interface = Interface(testing_console_io, MockSubprocess())
+        Interface.run()
         self.assertTrue(testing_console_io.is_done())
 
     def test_plays_tracks(self):
