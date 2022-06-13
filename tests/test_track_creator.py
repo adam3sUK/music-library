@@ -1,5 +1,7 @@
 import unittest
 from unittest.mock import MagicMock, Mock
+
+import eyed3
 from player.track_creator import TrackCreator, Track
 
 class TestTrackCreator(unittest.TestCase):
@@ -20,3 +22,13 @@ class TestTrackCreator(unittest.TestCase):
     track_creator = TrackCreator(path, eyed3)
     track = track_creator.create()
     self.assertIsInstance(track, Track)
+
+  def test_returns_false_if_meta_not_found(self):
+    path = '/data/tunes/myfav.wav'
+    eyed3 = Mock()
+    tag = MagicMock(artist='', title='')
+    attrs = {'load.return_value': tag}
+    eyed3.configure_mock(**attrs)
+    track_creator = TrackCreator(path, eyed3)
+    track = track_creator.create()
+    self.assertFalse(track)

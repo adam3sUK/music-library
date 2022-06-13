@@ -49,8 +49,11 @@ class Interface:
     def _add_track_file(self):
         file = self.console.input("What's the file? ")
         track = TrackCreator(file, self.eyed3).create()
-        self.music_library.add(track)
-        self.console.print(f"{track} added!")
+        if track:
+            self.music_library.add(track)
+            self.console.print(f"{track} added!")
+        else:
+            self.console.input("Track information not found, please add manually.")
 
     def _add_track(self):
         title = self.console.input("What's the title? ")
@@ -68,7 +71,7 @@ class Interface:
 
     def _list_artist_tracks(self, tracks):
         artist_tracks = ArtistTracks()
-        artist_tracks.add(tracks)
+        track_list =artist_tracks.add(tracks)
         track_list = artist_tracks.most_tracks()
         for idx, (artist, songs) in enumerate(track_list):
             self.console.print(

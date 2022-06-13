@@ -7,4 +7,6 @@ class TrackCreator:
 
     def create(self):
         track = self._metafinder.load(self._file)
-        return Track(title=track.tag.title, artist=track.tag.artist, file=self._file)
+        if len(track.tag.title) > 0:
+            return Track(title=track.tag.title, artist=track.tag.artist, file=self._file)
+        return False

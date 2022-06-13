@@ -1,6 +1,6 @@
 import unittest
 from player.music_library import MusicLibrary, Track
-from player.search import Searchers
+
 
 class TestMusicLibrary(unittest.TestCase):
     def setUp(self):
