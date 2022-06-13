@@ -3,11 +3,11 @@ from player.music_player import MusicPlayer
 from player.artist_tracks import ArtistTracks
 from player.track_creator import TrackCreator
 from player.search import Searchers
-import eyed3
 
 class Interface:
-    def __init__(self, console, subprocess):
+    def __init__(self, console, subprocess, eyed3):
         self.console = console
+        self.eyed3 = eyed3
         self.music_library = MusicLibrary()
         self.music_player = MusicPlayer(subprocess)
 
@@ -47,7 +47,10 @@ class Interface:
         return self.console.input("What do you pick? ")
 
     def _add_track_file(self):
-        pass
+        file = self.console.input("What's the file? ")
+        track = TrackCreator(file, self.eyed3).create()
+        self.music_library.add(track)
+        self.console.print(f"{track} added!")
 
     def _add_track(self):
         title = self.console.input("What's the title? ")
